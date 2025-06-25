@@ -16,6 +16,8 @@ using Content.Shared.Verbs;
 using Content.Shared.Wall;
 using Content.Shared.Whitelist;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Humanoid;
+using Content.Shared.Zombies;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -126,7 +128,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     protected void OnRelayMovement(EntityUid uid, SharedEntityStorageComponent component, ref ContainerRelayMovementEntityEvent args)
     {
-        if (!HasComp<HandsComponent>(args.Entity))
+        if (!HasComp<HandsComponent>(args.Entity) && !((HasComp<ZombieComponent>(args.Entity) && HasComp<HumanoidAppearanceComponent>(args.Entity))))
             return;
 
         if (!_actionBlocker.CanMove(args.Entity))
